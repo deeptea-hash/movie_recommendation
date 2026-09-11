@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CineMatch — Movie Recommender</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap">
+      <span class="logo">Cine<span class="logo__accent">Match</span></span>
+      <p class="tagline">Content-based recommendations, powered by TF-IDF &amp; cosine similarity.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <section class="search-panel">
+      <form action="/" method="get" class="search-form">
+        <label for="title">Pick a movie you like</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          list="title-options"
+          placeholder="e.g. Inception, Parasite, Toy Story..."
+          value="{{ query }}"
+          autocomplete="off"
+        >
+        <datalist id="title-options">
+          {% for t in titles %}
+          <option value="{{ t }}">
+          {% endfor %}
+        </datalist>
+        <button type="submit">Get recommendations</button>
+      </form>
+
+      {% if error %}
+        <p class="status status--error">{{ error }}</p>
+      {% endif %}
+    </section>
+
+    {% if matched %}
+      <section class="results">
+        <h2>Because you watched <span class="results__match">{{ matched }}</span></h2>
+
+        <div class="results__grid">
+          {% for movie in results %}
+          <article class="movie-card">
+            <div class="movie-card__score" title="Cosine similarity score">{{ "%.0f"|format(movie.score * 100) }}%</div>
+            <h3>{{ movie.title }}</h3>
+            <p class="movie-card__meta">{{ movie.year }} · {{ movie.genres }}</p>
+            <p class="movie-card__director">Directed by {{ movie.director }}</p>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+    {% elif not query %}
+      <section class="empty-state">
+        <p>Start typing a title above — the field will suggest matches from the {{ titles|length }} movies in the sample dataset.</p>
+        <p class="empty-state__browse">Browse all titles:</p>
+        <ul class="title-chip-list">
+          {% for t in titles[:12] %}
+          <li><a href="/?title={{ t|urlencode }}">{{ t }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>CineMatch is a demo project. Swap <code>data/movies.csv</code> for a larger dataset (e.g. MovieLens or TMDB) to scale it up.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

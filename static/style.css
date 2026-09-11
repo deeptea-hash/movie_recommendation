@@ -1,0 +1,191 @@
+/* CineMatch — a small, dependency-free stylesheet for the Flask front-end */
+
+:root {
+  --color-bg: #0b0c10;
+  --color-panel: #14161c;
+  --color-panel-2: #1c1f27;
+  --color-gold: #d4af37;
+  --color-gold-dim: #a3872b;
+  --color-text: #e8e6df;
+  --color-text-dim: #9a988f;
+  --color-line: rgba(232, 230, 223, 0.1);
+
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+.wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+a { color: var(--color-gold); }
+
+/* Header */
+.site-header {
+  padding: 3rem 0 2rem;
+  border-bottom: 1px solid var(--color-line);
+  background: radial-gradient(ellipse at top, rgba(212, 175, 55, 0.08), transparent 60%);
+}
+.logo {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+.logo__accent { color: var(--color-gold); }
+.tagline {
+  color: var(--color-text-dim);
+  margin: 0.4rem 0 0;
+  font-size: 0.95rem;
+}
+
+/* Search panel */
+.search-panel {
+  padding: 2.5rem 0 1rem;
+}
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+.search-form label {
+  display: block;
+  width: 100%;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-dim);
+  margin-bottom: 0.5rem;
+}
+.search-form input {
+  flex: 1 1 320px;
+  padding: 0.85em 1em;
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  color: var(--color-text);
+  font-size: 1rem;
+  font-family: inherit;
+}
+.search-form input:focus {
+  outline: none;
+  border-color: var(--color-gold-dim);
+}
+.search-form button {
+  padding: 0.85em 1.6em;
+  background: var(--color-gold);
+  color: #14120a;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.search-form button:hover { background: var(--color-gold-dim); }
+
+.status--error {
+  margin-top: 1rem;
+  color: #e08a6f;
+  font-size: 0.9rem;
+}
+
+/* Results */
+.results { padding: 2rem 0 4rem; }
+.results h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.results__match { color: var(--color-gold); }
+
+.results__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.movie-card {
+  position: relative;
+  background: var(--color-panel);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+.movie-card__score {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--color-gold);
+  font-size: 1rem;
+}
+.movie-card h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0 2.5rem 0.4rem 0;
+}
+.movie-card__meta {
+  color: var(--color-text-dim);
+  font-size: 0.85rem;
+  margin: 0 0 0.4rem;
+}
+.movie-card__director {
+  color: var(--color-text-dim);
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+/* Empty state */
+.empty-state { padding: 2rem 0 4rem; color: var(--color-text-dim); }
+.empty-state__browse { margin-top: 1.5rem; font-weight: 600; color: var(--color-text); }
+.title-chip-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.title-chip-list li {
+  background: var(--color-panel-2);
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  padding: 0.4em 0.9em;
+  font-size: 0.85rem;
+}
+.title-chip-list a { color: var(--color-text); text-decoration: none; }
+.title-chip-list a:hover { color: var(--color-gold); }
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--color-line);
+  padding: 1.5rem 0;
+  color: var(--color-text-dim);
+  font-size: 0.8rem;
+}
+.site-footer code {
+  background: var(--color-panel);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+}
+
+@media (max-width: 600px) {
+  .logo { font-size: 1.9rem; }
+  .search-form button { width: 100%; }
+}
